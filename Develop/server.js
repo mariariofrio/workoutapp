@@ -8,18 +8,21 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(express.static("public"));
+app.use(express.static('public'));
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
-  useNewUrlParser: true,
+  
+useNewUrlParser: true,
+useUnifiedTopology: true,
   useFindAndModify: false
 });
 
 // routes
-app.use(require("./Develop/routes/html-routes"));
-// app.use(require("./Develop/routes/api-routes"));
+require("./routes/htmlroutes")(app);
+app.use(require("./routes/apiroutes"));
 
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}!`);
 });
+console.log("its working");
